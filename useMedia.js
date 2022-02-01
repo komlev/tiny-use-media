@@ -1,41 +1,43 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-const getCurrentBreakpoint = (soredQueries) => {
-  const index = soredQueries.findIndex((q) => !q.query.matches);
-  const queryIndex = (~index ? index : soredQueries.length) - 1;
-  return queryIndex >= 0 ? soredQueries[queryIndex].bp : undefined;
-};
+let isClient = typeof window !== "undefined",
+  getCurrent = (queries) => {
+    let index = queries.findIndex((query) => isClient && !query.q.matches),
+      queryIndex = (~index ? index : queries.length) - 1;
+    return queryIndex >= 0 ? queries[queryIndex].bp : undefined;
+  },
+  getResult = (queries) => {
+    let current = getCurrent(queries),
+      currentIndex = queries.findIndex((query) => query.bp === current),
+      res = queries.reduce((acc, q, index) => {
+        acc[q.bp] = currentIndex >= index;
+        return acc;
+      }, {});
+    res.current = current;
+    return res;
+  };
 
-const getResult = (queries) => {
-  const current = getCurrentBreakpoint(queries);
-  const currentIndex = queries.findIndex((q) => q.bp === current);
-  const res = queries.reduce((acc, q, index) => {
-    acc[q.bp] = currentIndex >= index;
-    return acc;
-  }, {});
-  res.current = current;
-  return res;
-};
-
-export const useMedia = (breakpoints) => {
-  const handler = useCallback(() => setResult(getResult(queries)), []);
-  const queries = useMemo(() => {
-    const isClient = typeof window !== "undefined";
-    return Object.keys(breakpoints)
-      .sort((a, b) => parseInt(breakpoints[a]) - parseInt(breakpoints[b]))
-      .map((bp) => {
-        const query = isClient
-          ? window.matchMedia(`(min-width:${breakpoints[bp]}px)`)
-          : undefined;
-        return { query, bp };
-      });
-  }, []);
-  const [result, setResult] = useState(getResult(queries));
+export let useMedia = (breakpoints) => {
+  let queries = useMemo(
+    () =>
+      Object.keys(breakpoints)
+        .sort((a, b) => +breakpoints[a] - +breakpoints[b])
+        .map((bp) => {
+          let q = isClient
+            ? window.matchMedia(`(min-width:${breakpoints[bp]}px)`)
+            : undefined;
+          return { q, bp };
+        }),
+    Object.values(breakpoints)
+  );
+  let [result, setResult] = useState(getResult(queries));
   useEffect(() => {
-    queries.forEach((q) => q.query.addEventListener("change", handler));
-    return () => {
-      queries.forEach((q) => q.query.removeEventListener("change", handler));
-    };
-  }, []);
+    let handler = () => setResult(getResult(queries));
+    queries.forEach((query) => query.q.addEventListener("change", handler));
+    return () =>
+      queries.forEach((query) =>
+        query.q.removeEventListener("change", handler)
+      );
+  }, [queries]);
   return result;
 };
