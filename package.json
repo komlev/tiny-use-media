@@ -1,7 +1,7 @@
 {
   "name": "tiny-use-media",
   "description": "react hook for getting breakpoints state in runtime",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./dist/useMedia.umd.js",
   "module": "./dist/useMedia.es.js",
   "author": {
