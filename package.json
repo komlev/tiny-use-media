@@ -1,13 +1,17 @@
 {
   "name": "tiny-use-media",
   "description": "react hook for getting breakpoints state in runtime",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "main": "./dist/useMedia.umd.js",
   "module": "./dist/useMedia.es.js",
   "author": {
     "name": "Valeriy Komlev",
     "email": "komlev88@gmail.com",
     "url": "https://komlev.me/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/komlev/tiny-use-media.git"
   },
   "keywords": [
     "react",
