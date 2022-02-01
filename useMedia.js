@@ -19,16 +19,17 @@ const getResult = (queries) => {
 
 export const useMedia = (breakpoints) => {
   const handler = useCallback(() => setResult(getResult(queries)), []);
-  const queries = useMemo(
-    () =>
-      Object.keys(breakpoints)
-        .sort((a, b) => parseInt(breakpoints[a]) - parseInt(breakpoints[b]))
-        .map((bp) => {
-          const query = window.matchMedia(`(min-width:${breakpoints[bp]}px)`);
-          return { query, bp };
-        }),
-    []
-  );
+  const queries = useMemo(() => {
+    const isClient = typeof window !== "undefined";
+    return Object.keys(breakpoints)
+      .sort((a, b) => parseInt(breakpoints[a]) - parseInt(breakpoints[b]))
+      .map((bp) => {
+        const query = isClient
+          ? window.matchMedia(`(min-width:${breakpoints[bp]}px)`)
+          : undefined;
+        return { query, bp };
+      });
+  }, []);
   const [result, setResult] = useState(getResult(queries));
   useEffect(() => {
     queries.forEach((q) => q.query.addEventListener("change", handler));
