@@ -2,8 +2,7 @@
   "name": "tiny-use-media",
   "description": "react hook for getting breakpoints state in runtime",
   "version": "1.0.3",
-  "main": "./dist/useMedia.umd.js",
-  "module": "./dist/useMedia.es.js",
+  "browser": "./index.js",
   "author": {
     "name": "Valeriy Komlev",
     "email": "komlev88@gmail.com",
@@ -24,21 +23,13 @@
   ],
   "license": "MIT",
   "files": [
-    "dist"
+    "./index.js"
   ],
-  "exports": {
-    ".": {
-      "import": "./dist/useMedia.es.js",
-      "require": "./dist/useMedia.umd.js"
-    }
-  },
   "scripts": {
-    "build": "vite build",
     "publish": "clean-publish"
   },
   "devDependencies": {
-    "clean-publish": "^4.0.0",
-    "vite": "^2.7.13"
+    "clean-publish": "^4.0.0"
   },
   "peerDependencies": {
     "react": ">=16.8"
