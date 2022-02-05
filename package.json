@@ -22,9 +22,6 @@
     "useMedia"
   ],
   "license": "MIT",
-  "files": [
-    "./index.js"
-  ],
   "scripts": {
     "publish": "clean-publish"
   },
