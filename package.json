@@ -1,7 +1,7 @@
 {
   "name": "tiny-use-media",
   "description": "react hook for getting breakpoints state in runtime",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "browser": "./index.js",
   "author": {
     "name": "Valeriy Komlev",
