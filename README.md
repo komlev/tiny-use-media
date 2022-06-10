@@ -1,6 +1,6 @@
 # tiny-use-media
 
-Small (0.5 Kb) react hook for getting media breakpoints state info in runtime
+Small (0.6 Kb) react hook for getting media breakpoints state info in runtime
 
 ## Usage
 
@@ -64,6 +64,14 @@ E.g. output for screen size of 900px
     tablet: true,
     desktop: false
 }
+```
+
+## ESM
+If you need ESM module it can be found here
+[here](https://github.com/komlev/tiny-use-media-esm)
+or installed with
+```
+npm i tiny-use-media-esm --save
 ```
 
 ## License
