@@ -1,6 +1,6 @@
 # tiny-use-media
 
-Small (0.5 Kb) react hook for getting media breakpoints state info in runtime
+Small (0.7 Kb) react hook for getting media breakpoints state info in runtime
 
 ## Usage
 
