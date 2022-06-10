@@ -31,11 +31,21 @@ let isClient = typeof window !== "undefined",
     let [result, setResult] = useState(getResult(queries));
     useEffect(() => {
       let handler = () => setResult(getResult(queries));
-      queries.forEach((query) => query.q.addEventListener("change", handler));
+      queries.forEach((query) => {
+        try {
+          query.q.addEventListener("change", handler);
+        } catch (err) {
+          query.q.addListener(handler);
+        }
+      });
       return () =>
-        queries.forEach((query) =>
-          query.q.removeEventListener("change", handler)
-        );
+        queries.forEach((query) => {
+          try {
+            query.q.removeEventListener("change", handler);
+          } catch (err) {
+            query.q.removeListener(handler);
+          }
+        });
     }, [queries]);
     return result;
   };
